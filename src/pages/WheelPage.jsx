@@ -9,11 +9,9 @@ export default function WheelPage() {
     <div className="page wheel-page">
       <div className="wheel-header">
         <p className="wheel-greeting">Tonight&apos;s pick</p>
-        <p className="wheel-sub">
-          {movies.length === 0
-            ? 'Add movies in Settings to get started.'
-            : `${movies.length} movie${movies.length !== 1 ? 's' : ''} in the pool`}
-        </p>
+        {movies.length === 0 && (
+          <p className="wheel-sub">Add movies in Settings to get started.</p>
+        )}
       </div>
 
       <Wheel movies={movies} onRemoveMovie={removeMovie} />
