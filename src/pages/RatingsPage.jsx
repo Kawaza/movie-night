@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { useMovies } from '../context/MovieContext';
 
 export default function RatingsPage() {
-  const { movies, people, setRating } = useMovies();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { watched, people, setRating } = useMovies();
 
   const [movieId, setMovieId] = useState('');
   const [person, setPerson] = useState('');
@@ -12,23 +10,15 @@ export default function RatingsPage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    const prefillMovie = searchParams.get('movie');
-    if (prefillMovie && movies.some((m) => m.id === prefillMovie)) {
-      setMovieId(prefillMovie);
-      setSearchParams({}, { replace: true });
-    }
-  }, [searchParams, movies, setSearchParams]);
-
-  useEffect(() => {
     if (movieId && person) {
-      const movie = movies.find((m) => m.id === movieId);
+      const movie = watched.find((m) => m.id === movieId);
       const existing = movie?.ratings[person];
       setScore(existing != null ? String(existing) : '');
     } else {
       setScore('');
     }
     setSaved(false);
-  }, [movieId, person, movies]);
+  }, [movieId, person, watched]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -38,11 +28,12 @@ export default function RatingsPage() {
     setTimeout(() => setSaved(false), 2000);
   }
 
-  if (movies.length === 0) {
+  if (watched.length === 0) {
     return (
       <div className="page">
         <div className="empty-state">
-          <p>Add movies in Settings first.</p>
+          <p>Mark a movie as watched first.</p>
+          <p className="empty-hint">Spin the wheel or add one in Settings → Watched.</p>
         </div>
       </div>
     );
@@ -60,6 +51,7 @@ export default function RatingsPage() {
 
   return (
     <div className="page ratings-page">
+      <p className="ratings-desc">Rate movies you&apos;ve watched.</p>
       <form className="rating-form" onSubmit={handleSubmit}>
         <div className="field">
           <label htmlFor="rating-movie">Movie</label>
@@ -69,8 +61,8 @@ export default function RatingsPage() {
             onChange={(e) => setMovieId(e.target.value)}
             required
           >
-            <option value="">Select a movie</option>
-            {movies.map((m) => (
+            <option value="">Select a watched movie</option>
+            {watched.map((m) => (
               <option key={m.id} value={m.id}>{m.title}</option>
             ))}
           </select>

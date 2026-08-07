@@ -3,7 +3,7 @@ import { useMovies } from '../context/MovieContext';
 import { Link } from 'react-router-dom';
 
 export default function WheelPage() {
-  const { movies, people, removeMovie } = useMovies();
+  const { movies, people, markAsWatched } = useMovies();
 
   return (
     <div className="page wheel-page">
@@ -14,7 +14,7 @@ export default function WheelPage() {
         )}
       </div>
 
-      <Wheel movies={movies} onRemoveMovie={removeMovie} />
+      <Wheel movies={movies} onMarkWatched={markAsWatched} />
 
       {movies.length === 0 && (
         <Link to="/settings" className="btn btn-secondary btn-block wheel-cta">

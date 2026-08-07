@@ -659,7 +659,131 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-shrink: 0;
 }
 
-/* Rankings */
+.ratings-desc {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Settings */
+.settings-page {
+  max-width: 520px;
+}
+
+.settings-intro {
+  margin-bottom: 28px;
+}
+
+.settings-page-title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.settings-page-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.settings-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  margin-bottom: 16px;
+}
+
+.settings-card-header {
+  margin-bottom: 14px;
+}
+
+.settings-card-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.settings-card-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.user-list {
+  list-style: none;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.user-row:last-child {
+  border-bottom: none;
+}
+
+.user-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.user-name {
+  flex: 1;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.settings-list {
+  list-style: none;
+}
+
+.settings-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.settings-list-item:last-child {
+  border-bottom: none;
+}
+
+.settings-list-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-list-label {
+  display: block;
+  font-size: 0.9375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-list-sub {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
 .ranking-list {
   list-style: none;
 }
@@ -731,11 +855,11 @@ input[type="number"]::-webkit-outer-spin-button {
 @media (min-width: 768px) {
   .wheel-svg,
   .wheel-placeholder {
-    width: min(360px, 40vw);
+    width: min(560px, 52vw);
   }
 
   .wheel-page {
-    max-width: 520px;
+    max-width: 640px;
   }
 
   .modal {
@@ -750,5 +874,10 @@ input[type="number"]::-webkit-outer-spin-button {
 @media (min-width: 1024px) {
   :root {
     --content-max: 720px;
+  }
+
+  .wheel-svg,
+  .wheel-placeholder {
+    width: min(620px, 48vw);
   }
 }

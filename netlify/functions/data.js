@@ -11,6 +11,7 @@ const HEADERS = {
 function buildSeed() {
   return {
     movies: SEED_MOVIES,
+    watched: [],
     people: [],
     updatedAt: new Date().toISOString(),
   };
@@ -19,6 +20,7 @@ function buildSeed() {
 function normalizeData(body) {
   return {
     movies: Array.isArray(body?.movies) ? body.movies : [],
+    watched: Array.isArray(body?.watched) ? body.watched : [],
     people: Array.isArray(body?.people) ? body.people : [],
     updatedAt: new Date().toISOString(),
   };
@@ -28,7 +30,12 @@ async function readData(store) {
   const existing = await store.get('data', { type: 'json' });
 
   if (existing != null) {
-    return existing;
+    return {
+      movies: Array.isArray(existing.movies) ? existing.movies : [],
+      watched: Array.isArray(existing.watched) ? existing.watched : [],
+      people: Array.isArray(existing.people) ? existing.people : [],
+      updatedAt: existing.updatedAt ?? new Date().toISOString(),
+    };
   }
 
   const seeded = buildSeed();

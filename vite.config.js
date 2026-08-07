@@ -9,7 +9,8 @@ const DATA_PATH = path.resolve('.netlify', 'movie-night-data.json')
 function getSeededData() {
   return {
     movies: seedData.movies,
-    people: seedData.people,
+    watched: [],
+    people: seedData.people ?? [],
     updatedAt: new Date().toISOString(),
   }
 }
@@ -25,6 +26,7 @@ function readLocalData() {
     const parsed = JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'))
     return {
       movies: Array.isArray(parsed.movies) ? parsed.movies : [],
+      watched: Array.isArray(parsed.watched) ? parsed.watched : [],
       people: Array.isArray(parsed.people) ? parsed.people : [],
       updatedAt: parsed.updatedAt ?? null,
     }
@@ -68,6 +70,7 @@ function movieApiPlugin() {
               const parsed = JSON.parse(body)
               const data = {
                 movies: Array.isArray(parsed.movies) ? parsed.movies : [],
+                watched: Array.isArray(parsed.watched) ? parsed.watched : [],
                 people: Array.isArray(parsed.people) ? parsed.people : [],
                 updatedAt: new Date().toISOString(),
               }

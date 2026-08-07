@@ -2,6 +2,7 @@ const API_URL = '/api/data';
 
 export const defaultData = () => ({
   movies: [],
+  watched: [],
   people: [],
   updatedAt: null,
 });
@@ -12,6 +13,7 @@ export async function fetchData() {
   const data = await res.json();
   return {
     movies: Array.isArray(data.movies) ? data.movies : [],
+    watched: Array.isArray(data.watched) ? data.watched : [],
     people: Array.isArray(data.people) ? data.people : [],
     updatedAt: data.updatedAt ?? null,
   };
@@ -20,6 +22,7 @@ export async function fetchData() {
 export async function saveData(data) {
   const payload = {
     movies: data.movies,
+    watched: data.watched,
     people: data.people,
   };
   const res = await fetch(API_URL, {

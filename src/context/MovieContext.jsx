@@ -13,6 +13,23 @@ const MovieContext = createContext(null);
 const SAVE_DELAY = 400;
 const POLL_INTERVAL = 20000;
 
+function updateRatings(movie, person, rating) {
+  const ratings = { ...movie.ratings };
+  if (rating === '' || rating === null || rating === undefined) {
+    delete ratings[person];
+  } else {
+    ratings[person] = Math.min(10, Math.max(0, Number(rating)));
+  }
+  return { ...movie, ratings };
+}
+
+function stripPersonFromMovies(movies, name) {
+  return movies.map((m) => {
+    const { [name]: _, ...rest } = m.ratings;
+    return { ...m, ratings: rest };
+  });
+}
+
 export function MovieProvider({ children }) {
   const [data, setData] = useState(defaultData);
   const [loading, setLoading] = useState(true);
@@ -135,6 +152,53 @@ export function MovieProvider({ children }) {
     [applyChange]
   );
 
+  const markAsWatched = useCallback(
+    (id) => {
+      applyChange(
+        (prev) => {
+          const movie = prev.movies.find((m) => m.id === id);
+          if (!movie) return prev;
+          return {
+            ...prev,
+            movies: prev.movies.filter((m) => m.id !== id),
+            watched: [...prev.watched, { ...movie }],
+          };
+        },
+        { immediate: true }
+      );
+    },
+    [applyChange]
+  );
+
+  const addWatchedMovie = useCallback(
+    (title) => {
+      const trimmed = title.trim();
+      if (!trimmed) return false;
+      applyChange(
+        (prev) => ({
+          ...prev,
+          watched: [...prev.watched, { id: generateId(), title: trimmed, ratings: {} }],
+        }),
+        { immediate: true }
+      );
+      return true;
+    },
+    [applyChange]
+  );
+
+  const removeWatchedMovie = useCallback(
+    (id) => {
+      applyChange(
+        (prev) => ({
+          ...prev,
+          watched: prev.watched.filter((m) => m.id !== id),
+        }),
+        { immediate: true }
+      );
+    },
+    [applyChange]
+  );
+
   const addPerson = useCallback(
     (name) => {
       const trimmed = name.trim();
@@ -167,10 +231,8 @@ export function MovieProvider({ children }) {
         (prev) => ({
           ...prev,
           people: prev.people.filter((p) => p !== name),
-          movies: prev.movies.map((m) => {
-            const { [name]: _, ...rest } = m.ratings;
-            return { ...m, ratings: rest };
-          }),
+          movies: stripPersonFromMovies(prev.movies, name),
+          watched: stripPersonFromMovies(prev.watched, name),
         }),
         { immediate: true }
       );
@@ -182,16 +244,9 @@ export function MovieProvider({ children }) {
     (movieId, person, rating) => {
       applyChange((prev) => ({
         ...prev,
-        movies: prev.movies.map((m) => {
-          if (m.id !== movieId) return m;
-          const ratings = { ...m.ratings };
-          if (rating === '' || rating === null || rating === undefined) {
-            delete ratings[person];
-          } else {
-            ratings[person] = Math.min(10, Math.max(0, Number(rating)));
-          }
-          return { ...m, ratings };
-        }),
+        watched: prev.watched.map((m) =>
+          m.id === movieId ? updateRatings(m, person, rating) : m
+        ),
       }));
     },
     [applyChange]
@@ -199,7 +254,7 @@ export function MovieProvider({ children }) {
 
   const getSortedMovies = useCallback(
     (filterPerson = null) => {
-      const withAvg = data.movies.map((m) => ({
+      const withAvg = data.watched.map((m) => ({
         ...m,
         average:
           filterPerson && m.ratings[filterPerson] != null
@@ -213,7 +268,7 @@ export function MovieProvider({ children }) {
         .filter((m) => m.average != null)
         .sort((a, b) => b.average - a.average);
     },
-    [data.movies]
+    [data.watched]
   );
 
   if (loading) {
@@ -229,11 +284,15 @@ export function MovieProvider({ children }) {
     <MovieContext.Provider
       value={{
         movies: data.movies,
+        watched: data.watched,
         people: data.people,
         syncStatus,
         refresh,
         addMovie,
         removeMovie,
+        markAsWatched,
+        addWatchedMovie,
+        removeWatchedMovie,
         addPerson,
         removePerson,
         setRating,

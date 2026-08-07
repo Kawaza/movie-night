@@ -1,15 +1,7 @@
-import { useNavigate } from 'react-router-dom';
 import { IconClose } from './Icons';
 
-export default function PickModal({ movie, onClose, onRemove, onKeep }) {
-  const navigate = useNavigate();
-
+export default function PickModal({ movie, onClose, onMarkWatched, onKeep }) {
   if (!movie) return null;
-
-  function handleRateNow() {
-    onKeep?.();
-    navigate(`/ratings?movie=${movie.id}`);
-  }
 
   return (
     <div className="modal-overlay" onClick={onKeep} role="presentation">
@@ -31,15 +23,8 @@ export default function PickModal({ movie, onClose, onRemove, onKeep }) {
           <button
             type="button"
             className="btn btn-primary btn-block"
-            onClick={handleRateNow}
-          >
-            Rate it now
-          </button>
-          <button
-            type="button"
-            className="btn btn-ghost btn-block"
             onClick={() => {
-              onRemove();
+              onMarkWatched();
               onClose();
             }}
           >

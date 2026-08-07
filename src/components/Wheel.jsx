@@ -40,7 +40,7 @@ function getLabelPos(cx, cy, r, startAngle, endAngle) {
   };
 }
 
-export default function Wheel({ movies, onRemoveMovie }) {
+export default function Wheel({ movies, onMarkWatched }) {
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [winner, setWinner] = useState(null);
@@ -71,7 +71,7 @@ export default function Wheel({ movies, onRemoveMovie }) {
   }, [movies, spinning]);
 
   function handleMarkWatched() {
-    if (winner) onRemoveMovie(winner.id);
+    if (winner) onMarkWatched(winner.id);
     setWinner(null);
   }
 
@@ -158,7 +158,7 @@ export default function Wheel({ movies, onRemoveMovie }) {
           movie={winner}
           onClose={handleKeep}
           onKeep={handleKeep}
-          onRemove={handleMarkWatched}
+          onMarkWatched={handleMarkWatched}
         />
       )}
     </>
