@@ -7,7 +7,7 @@ export default function RatingsPage() {
   const [movieId, setMovieId] = useState('');
   const [person, setPerson] = useState('');
   const [score, setScore] = useState('');
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState('');
 
   useEffect(() => {
     if (movieId && person) {
@@ -17,15 +17,15 @@ export default function RatingsPage() {
     } else {
       setScore('');
     }
-    setSaved(false);
+    setSaved('');
   }, [movieId, person, watched]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!movieId || !person || score === '') return;
+    if (!movieId || !person) return;
     setRating(movieId, person, score);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    setSaved(score === '' ? 'removed' : 'saved');
+    setTimeout(() => setSaved(''), 2000);
   }
 
   if (watched.length === 0) {
@@ -95,16 +95,16 @@ export default function RatingsPage() {
               placeholder="0 – 10"
               value={score}
               onChange={(e) => setScore(e.target.value)}
-              required
             />
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary btn-block" disabled={!movieId || !person || score === ''}>
+        <button type="submit" className="btn btn-primary btn-block" disabled={!movieId || !person}>
           Save rating
         </button>
 
-        {saved && <p className="form-success">Rating saved.</p>}
+        {saved === 'saved' && <p className="form-success">Rating saved.</p>}
+        {saved === 'removed' && <p className="form-success">Rating removed.</p>}
       </form>
     </div>
   );

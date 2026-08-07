@@ -638,6 +638,21 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* Ratings */
+.ratings-page .field label,
+.ratings-page .ratings-desc {
+  color: var(--text);
+}
+
+.ratings-page select,
+.ratings-page select:invalid {
+  color: var(--text);
+}
+
+.ratings-page input::placeholder {
+  color: var(--text);
+  opacity: 1;
+}
+
 .rating-form {
   max-width: 400px;
   margin: 0 auto;
