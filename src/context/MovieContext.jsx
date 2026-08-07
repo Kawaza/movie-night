@@ -10,14 +10,15 @@ import { fetchData, saveData, defaultData } from '../utils/api';
 import { generateId, getAverageRating } from '../utils/storage';
 
 const MovieContext = createContext(null);
-const SAVE_DELAY = 600;
-const POLL_INTERVAL = 15000;
+const SAVE_DELAY = 400;
+const POLL_INTERVAL = 20000;
 
 export function MovieProvider({ children }) {
   const [data, setData] = useState(defaultData);
   const [loading, setLoading] = useState(true);
   const [syncStatus, setSyncStatus] = useState('loading');
   const pendingSave = useRef(false);
+  const isDirty = useRef(false);
   const saveTimer = useRef(null);
   const dataRef = useRef(data);
 
@@ -28,14 +29,11 @@ export function MovieProvider({ children }) {
     setSyncStatus('saving');
     try {
       const saved = await saveData(nextData);
-      setData((prev) => {
-        if (prev === nextData || dataRef.current === nextData) {
-          return { ...nextData, updatedAt: saved.updatedAt };
-        }
-        return prev;
-      });
+      isDirty.current = false;
+      setData({ ...nextData, updatedAt: saved.updatedAt });
       setSyncStatus('synced');
     } catch {
+      isDirty.current = true;
       setSyncStatus('error');
     } finally {
       pendingSave.current = false;
@@ -44,6 +42,7 @@ export function MovieProvider({ children }) {
 
   const scheduleSave = useCallback(
     (nextData) => {
+      isDirty.current = true;
       clearTimeout(saveTimer.current);
       saveTimer.current = setTimeout(() => persist(nextData), SAVE_DELAY);
     },
@@ -51,23 +50,30 @@ export function MovieProvider({ children }) {
   );
 
   const applyChange = useCallback(
-    (updater) => {
+    (updater, { immediate = false } = {}) => {
       setData((prev) => {
         const next = typeof updater === 'function' ? updater(prev) : updater;
-        scheduleSave(next);
+        if (immediate) {
+          clearTimeout(saveTimer.current);
+          persist(next);
+        } else {
+          scheduleSave(next);
+        }
         return next;
       });
     },
-    [scheduleSave]
+    [persist, scheduleSave]
   );
 
   const refresh = useCallback(async () => {
-    if (pendingSave.current) return;
+    if (pendingSave.current || isDirty.current) return;
     try {
       const remote = await fetchData();
       setData((prev) => {
-        if (pendingSave.current) return prev;
-        if (remote.updatedAt && prev.updatedAt === remote.updatedAt) return prev;
+        if (pendingSave.current || isDirty.current) return prev;
+        if (!remote.updatedAt) return remote;
+        if (!prev.updatedAt) return remote;
+        if (new Date(remote.updatedAt) <= new Date(prev.updatedAt)) return prev;
         return remote;
       });
       setSyncStatus('synced');
@@ -104,10 +110,13 @@ export function MovieProvider({ children }) {
     (title) => {
       const trimmed = title.trim();
       if (!trimmed) return false;
-      applyChange((prev) => ({
-        ...prev,
-        movies: [...prev.movies, { id: generateId(), title: trimmed, ratings: {} }],
-      }));
+      applyChange(
+        (prev) => ({
+          ...prev,
+          movies: [...prev.movies, { id: generateId(), title: trimmed, ratings: {} }],
+        }),
+        { immediate: true }
+      );
       return true;
     },
     [applyChange]
@@ -115,10 +124,13 @@ export function MovieProvider({ children }) {
 
   const removeMovie = useCallback(
     (id) => {
-      applyChange((prev) => ({
-        ...prev,
-        movies: prev.movies.filter((m) => m.id !== id),
-      }));
+      applyChange(
+        (prev) => ({
+          ...prev,
+          movies: prev.movies.filter((m) => m.id !== id),
+        }),
+        { immediate: true }
+      );
     },
     [applyChange]
   );
@@ -137,10 +149,13 @@ export function MovieProvider({ children }) {
         return { ok: false, error: 'Name already exists' };
       }
 
-      applyChange((prev) => ({
-        ...prev,
-        people: [...prev.people, trimmed],
-      }));
+      applyChange(
+        (prev) => ({
+          ...prev,
+          people: [...prev.people, trimmed],
+        }),
+        { immediate: true }
+      );
       return { ok: true };
     },
     [applyChange]
@@ -148,14 +163,17 @@ export function MovieProvider({ children }) {
 
   const removePerson = useCallback(
     (name) => {
-      applyChange((prev) => ({
-        ...prev,
-        people: prev.people.filter((p) => p !== name),
-        movies: prev.movies.map((m) => {
-          const { [name]: _, ...rest } = m.ratings;
-          return { ...m, ratings: rest };
+      applyChange(
+        (prev) => ({
+          ...prev,
+          people: prev.people.filter((p) => p !== name),
+          movies: prev.movies.map((m) => {
+            const { [name]: _, ...rest } = m.ratings;
+            return { ...m, ratings: rest };
+          }),
         }),
-      }));
+        { immediate: true }
+      );
     },
     [applyChange]
   );

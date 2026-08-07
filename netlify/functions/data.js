@@ -24,27 +24,25 @@ function normalizeData(body) {
   };
 }
 
+function getBlobStore() {
+  return getStore('movie-night');
+}
+
 async function readData() {
-  const seeded = buildSeed();
+  const store = getBlobStore();
+  const existing = await store.get('data', { type: 'json' });
 
-  try {
-    const store = getStore('movie-night');
-    const existing = await store.get('data', { type: 'json' });
-
-    if (existing != null) {
-      return existing;
-    }
-
-    await store.setJSON('data', seeded);
-    return seeded;
-  } catch (err) {
-    console.error('Blob read/seed failed:', err);
-    return seeded;
+  if (existing != null) {
+    return existing;
   }
+
+  const seeded = buildSeed();
+  await store.setJSON('data', seeded);
+  return seeded;
 }
 
 async function writeData(data) {
-  const store = getStore('movie-night');
+  const store = getBlobStore();
   await store.setJSON('data', data);
 }
 
@@ -86,7 +84,7 @@ export async function handler(event) {
     return {
       statusCode: 500,
       headers: HEADERS,
-      body: JSON.stringify({ error: 'Server error' }),
+      body: JSON.stringify({ error: 'Server error', message: err.message }),
     };
   }
 }
