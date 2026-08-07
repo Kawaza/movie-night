@@ -855,11 +855,11 @@ input[type="number"]::-webkit-outer-spin-button {
 @media (min-width: 768px) {
   .wheel-svg,
   .wheel-placeholder {
-    width: min(560px, 52vw);
+    width: min(420px, 42vw);
   }
 
   .wheel-page {
-    max-width: 640px;
+    max-width: 560px;
   }
 
   .modal {
@@ -878,6 +878,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
   .wheel-svg,
   .wheel-placeholder {
-    width: min(620px, 48vw);
+    width: min(460px, 38vw);
   }
 }
