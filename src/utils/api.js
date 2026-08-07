@@ -1,0 +1,32 @@
+const API_URL = '/api/data';
+
+export const defaultData = () => ({
+  movies: [],
+  people: [],
+  updatedAt: null,
+});
+
+export async function fetchData() {
+  const res = await fetch(API_URL);
+  if (!res.ok) throw new Error('Failed to load data');
+  const data = await res.json();
+  return {
+    movies: Array.isArray(data.movies) ? data.movies : [],
+    people: Array.isArray(data.people) ? data.people : [],
+    updatedAt: data.updatedAt ?? null,
+  };
+}
+
+export async function saveData(data) {
+  const payload = {
+    movies: data.movies,
+    people: data.people,
+  };
+  const res = await fetch(API_URL, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error('Failed to save data');
+  return res.json();
+}
