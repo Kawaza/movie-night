@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs';
-import seedData from '../default-data.json' with { type: 'json' };
+import seedData from '../default-data.json';
 
 const HEADERS = {
   'Content-Type': 'application/json',
@@ -7,6 +7,14 @@ const HEADERS = {
   'Access-Control-Allow-Methods': 'GET, PUT, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
+
+function buildSeed() {
+  return {
+    movies: seedData.movies,
+    people: seedData.people ?? [],
+    updatedAt: new Date().toISOString(),
+  };
+}
 
 function normalizeData(body) {
   return {
@@ -16,25 +24,31 @@ function normalizeData(body) {
   };
 }
 
+function getBlobStore() {
+  return getStore('movie-night');
+}
+
 async function readData() {
-  const store = getStore({ name: 'movie-night', consistency: 'strong' });
-  const existing = await store.get('data', { type: 'json' });
+  const seeded = buildSeed();
 
-  if (existing !== null) {
-    return existing;
+  try {
+    const store = getBlobStore();
+    const existing = await store.get('data', { type: 'json' });
+
+    if (existing != null) {
+      return existing;
+    }
+
+    await store.setJSON('data', seeded);
+    return seeded;
+  } catch (err) {
+    console.error('Blob read/seed failed:', err);
+    return seeded;
   }
-
-  const seeded = {
-    movies: seedData.movies,
-    people: seedData.people,
-    updatedAt: new Date().toISOString(),
-  };
-  await store.setJSON('data', seeded);
-  return seeded;
 }
 
 async function writeData(data) {
-  const store = getStore({ name: 'movie-night', consistency: 'strong' });
+  const store = getBlobStore();
   await store.setJSON('data', data);
 }
 
