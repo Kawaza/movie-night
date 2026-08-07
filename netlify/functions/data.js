@@ -24,12 +24,7 @@ function normalizeData(body) {
   };
 }
 
-function getBlobStore() {
-  return getStore('movie-night');
-}
-
-async function readData() {
-  const store = getBlobStore();
+async function readData(store) {
   const existing = await store.get('data', { type: 'json' });
 
   if (existing != null) {
@@ -41,50 +36,45 @@ async function readData() {
   return seeded;
 }
 
-async function writeData(data) {
-  const store = getBlobStore();
-  await store.setJSON('data', data);
-}
-
-export async function handler(event) {
-  const method = event.httpMethod;
-
-  if (method === 'OPTIONS') {
-    return { statusCode: 204, headers: HEADERS, body: '' };
+export default async (req) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: HEADERS });
   }
 
   try {
-    if (method === 'GET') {
-      const data = await readData();
-      return {
-        statusCode: 200,
+    const store = getStore('movie-night');
+
+    if (req.method === 'GET') {
+      const data = await readData(store);
+      return new Response(JSON.stringify(data), {
+        status: 200,
         headers: HEADERS,
-        body: JSON.stringify(data),
-      };
+      });
     }
 
-    if (method === 'PUT') {
-      const body = JSON.parse(event.body || '{}');
+    if (req.method === 'PUT') {
+      const body = await req.json();
       const data = normalizeData(body);
-      await writeData(data);
-      return {
-        statusCode: 200,
+      await store.setJSON('data', data);
+      return new Response(JSON.stringify(data), {
+        status: 200,
         headers: HEADERS,
-        body: JSON.stringify(data),
-      };
+      });
     }
 
-    return {
-      statusCode: 405,
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
       headers: HEADERS,
-      body: JSON.stringify({ error: 'Method not allowed' }),
-    };
+    });
   } catch (err) {
     console.error('Data function error:', err);
-    return {
-      statusCode: 500,
-      headers: HEADERS,
-      body: JSON.stringify({ error: 'Server error', message: err.message }),
-    };
+    return new Response(
+      JSON.stringify({ error: 'Server error', message: err.message }),
+      { status: 500, headers: HEADERS }
+    );
   }
-}
+};
+
+export const config = {
+  path: '/api/data',
+};
