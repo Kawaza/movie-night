@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs';
-import seedData from '../default-data.json';
+import { SEED_MOVIES } from '../seed-movies.js';
 
 const HEADERS = {
   'Content-Type': 'application/json',
@@ -10,8 +10,8 @@ const HEADERS = {
 
 function buildSeed() {
   return {
-    movies: seedData.movies,
-    people: seedData.people ?? [],
+    movies: SEED_MOVIES,
+    people: [],
     updatedAt: new Date().toISOString(),
   };
 }
@@ -24,15 +24,11 @@ function normalizeData(body) {
   };
 }
 
-function getBlobStore() {
-  return getStore('movie-night');
-}
-
 async function readData() {
   const seeded = buildSeed();
 
   try {
-    const store = getBlobStore();
+    const store = getStore('movie-night');
     const existing = await store.get('data', { type: 'json' });
 
     if (existing != null) {
@@ -48,7 +44,7 @@ async function readData() {
 }
 
 async function writeData(data) {
-  const store = getBlobStore();
+  const store = getStore('movie-night');
   await store.setJSON('data', data);
 }
 

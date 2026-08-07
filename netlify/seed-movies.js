@@ -1,0 +1,432 @@
+export const SEED_MOVIES = [
+  {
+    "id": "e6f1c841-7cb5-447f-aa18-c1419fdfe990",
+    "title": "Clue",
+    "ratings": {}
+  },
+  {
+    "id": "c4b88a1a-41b2-458f-943c-9da95028eb60",
+    "title": "Rocky Horror Picture Show",
+    "ratings": {}
+  },
+  {
+    "id": "e410a4a1-bff7-4062-b560-d090d147d269",
+    "title": "Interview with a Vampire",
+    "ratings": {}
+  },
+  {
+    "id": "edb97c77-7737-4c4d-a722-3faeb992b228",
+    "title": "Knives Out",
+    "ratings": {}
+  },
+  {
+    "id": "f56b6139-812c-45f6-8529-b6843052aae0",
+    "title": "Jurassic Park",
+    "ratings": {}
+  },
+  {
+    "id": "279ddb32-7bb7-46aa-8bb7-0f82b480f549",
+    "title": "Cha Cha Real Smooth",
+    "ratings": {}
+  },
+  {
+    "id": "5ebbb3a4-e79f-4e7f-a722-2a388a4791e4",
+    "title": "Blade Runner 2049",
+    "ratings": {}
+  },
+  {
+    "id": "cbf74868-95a9-4cb7-9fab-90fa285c61ea",
+    "title": "Oppenheimer",
+    "ratings": {}
+  },
+  {
+    "id": "25f1df79-2f7c-4383-beb3-11c3e78c059a",
+    "title": "Barbie",
+    "ratings": {}
+  },
+  {
+    "id": "014180df-2cc6-4593-ba36-6ee40d44c3dd",
+    "title": "Coraline",
+    "ratings": {}
+  },
+  {
+    "id": "e14d0d87-f691-43ad-8496-9381392897fb",
+    "title": "Shawshank Redemption",
+    "ratings": {}
+  },
+  {
+    "id": "08232fd2-8925-47e8-8275-8bdadb56744e",
+    "title": "Memento",
+    "ratings": {}
+  },
+  {
+    "id": "1bef357f-176a-436f-a046-2af8354a9b89",
+    "title": "The Truman Show",
+    "ratings": {}
+  },
+  {
+    "id": "9b773123-f381-451b-ae16-4f81ab23a16a",
+    "title": "The Martian",
+    "ratings": {}
+  },
+  {
+    "id": "679e6441-0cf4-440a-9128-e3b1f4eeea61",
+    "title": "The Secret Life of Walter Mitty",
+    "ratings": {}
+  },
+  {
+    "id": "eb44f0a3-33ad-4068-867c-a0390822ef15",
+    "title": "Goodfellas",
+    "ratings": {}
+  },
+  {
+    "id": "8d72f17d-aa57-4dab-bd8c-528edb1752b5",
+    "title": "Something Wicked This Way Comes",
+    "ratings": {}
+  },
+  {
+    "id": "a4bf25fe-3e06-4841-982e-3b155ed7177b",
+    "title": "True Grit",
+    "ratings": {}
+  },
+  {
+    "id": "3458f08a-3bd8-4329-82f7-5e86ca59032a",
+    "title": "The Holdovers",
+    "ratings": {}
+  },
+  {
+    "id": "8966c26d-edc7-4550-b921-31498a381b41",
+    "title": "Grand Budapest Hotel",
+    "ratings": {}
+  },
+  {
+    "id": "3f37473c-13d5-4e00-8a50-3fd74c590580",
+    "title": "Fantastic Mr Fox",
+    "ratings": {}
+  },
+  {
+    "id": "205df2a8-dc6f-4ea0-bbae-67fb5d621087",
+    "title": "Men",
+    "ratings": {}
+  },
+  {
+    "id": "ad4995e7-799b-4048-b8e8-6f88c9de7329",
+    "title": "DnD movie",
+    "ratings": {}
+  },
+  {
+    "id": "b6d497fc-9ceb-464e-bac4-0eab304cd715",
+    "title": "Apocalypse Now",
+    "ratings": {}
+  },
+  {
+    "id": "ecf08126-4b74-488d-a089-3614dc10f247",
+    "title": "Misery",
+    "ratings": {}
+  },
+  {
+    "id": "b81ea1ab-3882-4c12-94d3-eddc1a88fe1b",
+    "title": "Chronicle",
+    "ratings": {}
+  },
+  {
+    "id": "63039f07-e3f2-4f69-a05f-41bd1ff801dd",
+    "title": "World War Z",
+    "ratings": {}
+  },
+  {
+    "id": "0486ec24-6c71-40a6-bd59-b08efcf19443",
+    "title": "Kung Fu Panda 2",
+    "ratings": {}
+  },
+  {
+    "id": "824149d3-8d2f-42f1-a28d-55d1db958a9b",
+    "title": "Howls Moving Castle",
+    "ratings": {}
+  },
+  {
+    "id": "f609224a-ba36-4ad0-8e34-f09f4118557d",
+    "title": "Grave of the Fireflies",
+    "ratings": {}
+  },
+  {
+    "id": "0f727aee-f91b-47a6-a1f3-a22febb2753f",
+    "title": "Princess Mononoke",
+    "ratings": {}
+  },
+  {
+    "id": "9a5274d7-ff70-4bd3-9a95-1975eb259aa6",
+    "title": "Arrietty",
+    "ratings": {}
+  },
+  {
+    "id": "33cb2376-4793-465f-8cc2-10d3b31c3ca0",
+    "title": "A Quiet Place",
+    "ratings": {}
+  },
+  {
+    "id": "143c0eec-d426-4589-99b0-307dba5c2dea",
+    "title": "Moonrise Kingdom",
+    "ratings": {}
+  },
+  {
+    "id": "62947053-b834-4b87-bd2b-52fd18878aa0",
+    "title": "The Killer",
+    "ratings": {}
+  },
+  {
+    "id": "bf44532a-a25d-4f09-9d05-e706608fcf22",
+    "title": "All Quiet on the Western Front",
+    "ratings": {}
+  },
+  {
+    "id": "928ca1af-f43b-4d32-a9ca-dad74fa78767",
+    "title": "The Godfather",
+    "ratings": {}
+  },
+  {
+    "id": "e7082b30-665a-410f-ad21-986e9204fd7d",
+    "title": "The Mask",
+    "ratings": {}
+  },
+  {
+    "id": "2f7ace62-5cc6-41be-9ca0-e0bef2064f95",
+    "title": "Puss in Boots: the Last Wish",
+    "ratings": {}
+  },
+  {
+    "id": "09d680dd-9a92-4e2e-8fb2-87a00b96ec3b",
+    "title": "Austin Powers",
+    "ratings": {}
+  },
+  {
+    "id": "302fe85b-cc57-42a0-bba2-d06ada613330",
+    "title": "Fried Green Tomatoes",
+    "ratings": {}
+  },
+  {
+    "id": "8de72cc8-dc8e-49ae-b905-87a8db441893",
+    "title": "Poppy",
+    "ratings": {}
+  },
+  {
+    "id": "9a4d45c6-84aa-4af6-b5de-bf97fe365c86",
+    "title": "Hoodwinked",
+    "ratings": {}
+  },
+  {
+    "id": "e3bfc79c-e62d-4d77-8860-1609c32822af",
+    "title": "Empire Records",
+    "ratings": {}
+  },
+  {
+    "id": "e1742caa-74fa-4188-80ec-f0107346328e",
+    "title": "Scott pilgrim against the world",
+    "ratings": {}
+  },
+  {
+    "id": "fb831b9c-06fa-4546-8803-207191d1fa2e",
+    "title": "The lobster",
+    "ratings": {}
+  },
+  {
+    "id": "28672d61-0880-4b3c-b797-686829e3f3d0",
+    "title": "Peter Pan (live)",
+    "ratings": {}
+  },
+  {
+    "id": "94e8496f-7941-42de-96e2-93075b834638",
+    "title": "Hacksaw Ridge",
+    "ratings": {}
+  },
+  {
+    "id": "a30aff36-c82a-4ed4-94b3-9204d1719781",
+    "title": "Mrs Doubtfire",
+    "ratings": {}
+  },
+  {
+    "id": "571fc1e4-62cb-46cc-882f-04101a435ff1",
+    "title": "Juno",
+    "ratings": {}
+  },
+  {
+    "id": "2fcf2d29-fac2-43d1-a529-c2947dacc10e",
+    "title": "Working girl",
+    "ratings": {}
+  },
+  {
+    "id": "a2feb688-8d29-45cd-b5cb-62094cc0b234",
+    "title": "Dead poets society",
+    "ratings": {}
+  },
+  {
+    "id": "d2a82f14-caf0-484e-a1cc-14b0e19ef6d5",
+    "title": "3 Billboards Outside Ebbing Missouri",
+    "ratings": {}
+  },
+  {
+    "id": "a9da9109-a643-4aa5-87e6-7d5d984cfbb3",
+    "title": "Princess Bride",
+    "ratings": {}
+  },
+  {
+    "id": "6a31a6dd-03b1-4ae1-aff4-2d29d4308466",
+    "title": "Willow",
+    "ratings": {}
+  },
+  {
+    "id": "93890e49-fef7-4fab-89b0-4fdbecd88458",
+    "title": "Who framed roger rabbit",
+    "ratings": {}
+  },
+  {
+    "id": "9edc0eaf-3060-4dbf-a2be-07062a93bad1",
+    "title": "Ever after",
+    "ratings": {}
+  },
+  {
+    "id": "4409e5a9-ea48-473c-bf6d-765daff4bf3f",
+    "title": "Flubber",
+    "ratings": {}
+  },
+  {
+    "id": "17d1c2e3-7056-4c54-a899-59f557779b71",
+    "title": "Civil War",
+    "ratings": {}
+  },
+  {
+    "id": "b36af5e4-e00f-412a-ad33-2b7aa8215c29",
+    "title": "The thief and the cobbler",
+    "ratings": {}
+  },
+  {
+    "id": "71cd8cda-5a2d-40cb-ad65-42d246186b34",
+    "title": "Saving Private Ryan",
+    "ratings": {}
+  },
+  {
+    "id": "9f6651ea-86cd-49bc-a937-cfd02e32b6a7",
+    "title": "The Lighthouse",
+    "ratings": {}
+  },
+  {
+    "id": "77b08a59-edc7-4bea-abb9-25045fe7b2b8",
+    "title": "Pans Labyrinth",
+    "ratings": {}
+  },
+  {
+    "id": "f793b06b-2442-4964-9d50-c624c972b10a",
+    "title": "Indian horse",
+    "ratings": {}
+  },
+  {
+    "id": "66f0f6b7-f805-46b0-bac1-6dea184dbde6",
+    "title": "The ritual",
+    "ratings": {}
+  },
+  {
+    "id": "527d02b6-3256-48e3-bf38-453cba42240e",
+    "title": "Train to Busan",
+    "ratings": {}
+  },
+  {
+    "id": "c22350bb-9d94-4c1b-8fac-0e569ca38ebe",
+    "title": "Bullet Train",
+    "ratings": {}
+  },
+  {
+    "id": "94aade4f-9f8c-4a23-a4aa-2000ef53d5b7",
+    "title": "Spirited away",
+    "ratings": {}
+  },
+  {
+    "id": "55fb24e1-387e-490c-bbb1-ea9f91221c96",
+    "title": "Kill Bill",
+    "ratings": {}
+  },
+  {
+    "id": "20e554d8-d2bd-4e8b-82a0-26cc99dbeafb",
+    "title": "12 Angry Men",
+    "ratings": {}
+  },
+  {
+    "id": "b643da22-35ef-495c-853a-c3aa5e23cd73",
+    "title": "Hundreds of Beavers",
+    "ratings": {}
+  },
+  {
+    "id": "e2c006d2-8649-4b81-b779-20ccd6a8df30",
+    "title": "Jerry Maguire",
+    "ratings": {}
+  },
+  {
+    "id": "e85d5b3a-0254-4093-b632-4c122cc9f57e",
+    "title": "Zodiac",
+    "ratings": {}
+  },
+  {
+    "id": "44691bef-0728-4734-baed-d288b6063c0d",
+    "title": "The Sandlot",
+    "ratings": {}
+  },
+  {
+    "id": "15caac05-512f-48c7-9d47-810869ae51ce",
+    "title": "School of Rock",
+    "ratings": {}
+  },
+  {
+    "id": "c0e4262f-41ba-4727-ad91-67e08b43be86",
+    "title": "Lincoln",
+    "ratings": {}
+  },
+  {
+    "id": "b080b4be-a33d-4b8e-8b4f-fe7ab9c6c868",
+    "title": "Wake up Dead Man",
+    "ratings": {}
+  },
+  {
+    "id": "fdf9c7a5-046d-4da1-b790-e30d0529fd2c",
+    "title": "Jaws",
+    "ratings": {}
+  },
+  {
+    "id": "2de4ed12-28a6-462a-8ee0-e2d8c40761b6",
+    "title": "Invictus",
+    "ratings": {}
+  },
+  {
+    "id": "467d8df9-a11c-4610-8115-b1f38d41d674",
+    "title": "The importance of being Earnest",
+    "ratings": {}
+  },
+  {
+    "id": "40ef43fb-ae39-406d-b52b-704663bcdf18",
+    "title": "Ferris Bueller's Day Off",
+    "ratings": {}
+  },
+  {
+    "id": "d5c41669-0ab6-42d8-8a73-1aa370931cea",
+    "title": "The Green Mile",
+    "ratings": {}
+  },
+  {
+    "id": "03a2a203-03e8-4ea6-9b40-11c2a7ad1254",
+    "title": "The Green Book",
+    "ratings": {}
+  },
+  {
+    "id": "50bcd3b0-cf0f-4540-bcd4-1531e55a659b",
+    "title": "The Pianist",
+    "ratings": {}
+  },
+  {
+    "id": "20be5525-c062-44ea-b18c-48578a899168",
+    "title": "District 9",
+    "ratings": {}
+  },
+  {
+    "id": "6fdabc32-1972-4170-9d37-7482a8586919",
+    "title": "The Man From U.N.C.L.E.",
+    "ratings": {}
+  }
+];
