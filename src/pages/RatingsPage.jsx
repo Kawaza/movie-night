@@ -97,7 +97,6 @@ export default function RatingsPage() {
               onChange={(e) => setScore(e.target.value)}
               required
             />
-            <span className="score-suffix">/ 10</span>
           </div>
         </div>
 

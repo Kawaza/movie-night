@@ -68,7 +68,6 @@ export default function SettingsPage() {
       <section className="settings-card">
         <div className="settings-card-header">
           <h3 className="settings-card-title">Watch group</h3>
-          <p className="settings-card-desc">People who rate watched movies. Up to 10.</p>
         </div>
 
         <form className="form-row" onSubmit={handleAddPerson}>
@@ -111,7 +110,6 @@ export default function SettingsPage() {
       <section className="settings-card">
         <div className="settings-card-header">
           <h3 className="settings-card-title">Wheel</h3>
-          <p className="settings-card-desc">Movies on the spin wheel.</p>
         </div>
 
         <form className="form-row" onSubmit={handleAddMovie}>
@@ -151,7 +149,6 @@ export default function SettingsPage() {
       <section className="settings-card">
         <div className="settings-card-header">
           <h3 className="settings-card-title">Watched</h3>
-          <p className="settings-card-desc">Movies you&apos;ve seen. Only these can be rated.</p>
         </div>
 
         <form className="form-row" onSubmit={handleAddWatched}>
