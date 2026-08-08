@@ -803,16 +803,37 @@ input[type="number"]::-webkit-outer-spin-button {
   list-style: none;
 }
 
+.ranking-entry {
+  border-bottom: 1px solid var(--border);
+}
+
+.ranking-entry:last-child {
+  border-bottom: none;
+}
+
 .ranking-item {
   display: flex;
   align-items: center;
   gap: 16px;
+  width: 100%;
   padding: 14px 0;
-  border-bottom: 1px solid var(--border);
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.ranking-item:last-child {
-  border-bottom: none;
+.ranking-item:hover,
+.ranking-item-expanded {
+  background: var(--bg-hover);
+  margin: 0 -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: var(--radius);
 }
 
 .ranking-pos {
@@ -822,6 +843,7 @@ input[type="number"]::-webkit-outer-spin-button {
   min-width: 24px;
   text-align: right;
   font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
 }
 
 .ranking-info {
@@ -850,6 +872,54 @@ input[type="number"]::-webkit-outer-spin-button {
   font-variant-numeric: tabular-nums;
   min-width: 36px;
   text-align: right;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.ranking-chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(45deg);
+  transition: transform 0.15s;
+  flex-shrink: 0;
+  margin-left: -4px;
+}
+
+.ranking-chevron-open {
+  transform: rotate(-135deg);
+  margin-top: 4px;
+}
+
+.ranking-details {
+  list-style: none;
+  padding: 0 12px 12px 52px;
+}
+
+.ranking-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+}
+
+.ranking-detail-row:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.ranking-detail-name {
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+.ranking-detail-score {
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
   color: var(--accent);
 }
 
