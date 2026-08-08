@@ -48,10 +48,10 @@ export default function RankingsPage() {
             const isExpanded = expandedId === movie.id;
 
             return (
-              <li key={movie.id} className="ranking-entry">
+              <li key={movie.id} className={`ranking-entry${isExpanded ? ' ranking-entry-expanded' : ''}`}>
                 <button
                   type="button"
-                  className={`ranking-item${isExpanded ? ' ranking-item-expanded' : ''}`}
+                  className="ranking-item"
                   onClick={() => toggleExpanded(movie.id)}
                   aria-expanded={isExpanded}
                 >

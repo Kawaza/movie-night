@@ -801,47 +801,50 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .ranking-list {
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .ranking-entry {
-  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
-.ranking-entry:last-child {
-  border-bottom: none;
+.ranking-entry-expanded {
+  background: var(--bg-hover);
 }
 
 .ranking-item {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   width: 100%;
-  padding: 14px 0;
+  padding: 12px;
   border: none;
   background: none;
   color: inherit;
   font: inherit;
   text-align: left;
   cursor: pointer;
+  border-radius: var(--radius);
   transition: background-color 0.15s;
   -webkit-tap-highlight-color: transparent;
 }
 
-.ranking-item:hover,
-.ranking-item-expanded {
+.ranking-item:hover {
   background: var(--bg-hover);
-  margin: 0 -12px;
-  padding-left: 12px;
-  padding-right: 12px;
-  border-radius: var(--radius);
+}
+
+.ranking-entry-expanded .ranking-item:hover {
+  background: none;
 }
 
 .ranking-pos {
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-muted);
-  min-width: 24px;
-  text-align: right;
+  width: 28px;
+  text-align: center;
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
 }
@@ -877,24 +880,23 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .ranking-chevron {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-right: 2px solid var(--text-muted);
   border-bottom: 2px solid var(--text-muted);
   transform: rotate(45deg);
   transition: transform 0.15s;
   flex-shrink: 0;
-  margin-left: -4px;
 }
 
 .ranking-chevron-open {
   transform: rotate(-135deg);
-  margin-top: 4px;
+  margin-top: 3px;
 }
 
 .ranking-details {
   list-style: none;
-  padding: 0 12px 12px 52px;
+  padding: 0 12px 10px 52px;
 }
 
 .ranking-detail-row {
@@ -921,6 +923,21 @@ input[type="number"]::-webkit-outer-spin-button {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--accent);
+}
+
+/* Rankings page */
+.rankings-page .field {
+  margin-bottom: 28px;
+}
+
+.rankings-page .field label {
+  color: var(--text);
+  font-size: 0.8125rem;
+  margin-bottom: 8px;
+}
+
+.rankings-page select {
+  color: var(--text);
 }
 
 /* Empty states */
