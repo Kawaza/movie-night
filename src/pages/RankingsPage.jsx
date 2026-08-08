@@ -65,7 +65,6 @@ export default function RankingsPage() {
                     </span>
                   </div>
                   <span className="ranking-score">{movie.average}</span>
-                  <span className={`ranking-chevron${isExpanded ? ' ranking-chevron-open' : ''}`} aria-hidden="true" />
                 </button>
 
                 {isExpanded && (
