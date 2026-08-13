@@ -32,6 +32,9 @@ export default function SettingsPage() {
   const [personError, setPersonError] = useState('');
   const [poolToDelete, setPoolToDelete] = useState(null);
   const [watchedToDelete, setWatchedToDelete] = useState(null);
+  const [personToDelete, setPersonToDelete] = useState(null);
+  const [wheelExpanded, setWheelExpanded] = useState(false);
+  const [watchedExpanded, setWatchedExpanded] = useState(false);
 
   function handleAddMovie(e) {
     e.preventDefault();
@@ -94,7 +97,7 @@ export default function SettingsPage() {
                 <button
                   type="button"
                   className="btn-icon"
-                  onClick={() => removePerson(name)}
+                  onClick={() => setPersonToDelete(name)}
                   aria-label={`Remove ${name}`}
                 >
                   <IconTrash />
@@ -108,9 +111,20 @@ export default function SettingsPage() {
       </section>
 
       <section className="settings-card">
-        <div className="settings-card-header">
-          <h3 className="settings-card-title">Wheel</h3>
-        </div>
+        <button
+          type="button"
+          className="settings-collapse-header"
+          onClick={() => setWheelExpanded((open) => !open)}
+          aria-expanded={wheelExpanded}
+        >
+          <div>
+            <h3 className="settings-card-title">Wheel</h3>
+            <span className="settings-collapse-meta">
+              {movies.length} movie{movies.length !== 1 ? 's' : ''}
+              {wheelExpanded ? ' · hide list' : ' · show list'}
+            </span>
+          </div>
+        </button>
 
         <form className="form-row" onSubmit={handleAddMovie}>
           <input
@@ -125,31 +139,44 @@ export default function SettingsPage() {
           </button>
         </form>
 
-        {movies.length === 0 ? (
-          <p className="empty-hint">No movies on the wheel.</p>
-        ) : (
-          <ul className="settings-list">
-            {movies.map((movie) => (
-              <li key={movie.id} className="settings-list-item">
-                <span className="settings-list-label">{movie.title}</span>
-                <button
-                  type="button"
-                  className="btn-icon"
-                  onClick={() => setPoolToDelete(movie)}
-                  aria-label={`Remove ${movie.title}`}
-                >
-                  <IconTrash />
-                </button>
-              </li>
-            ))}
-          </ul>
+        {wheelExpanded && (
+          movies.length === 0 ? (
+            <p className="empty-hint">No movies on the wheel.</p>
+          ) : (
+            <ul className="settings-list">
+              {movies.map((movie) => (
+                <li key={movie.id} className="settings-list-item">
+                  <span className="settings-list-label">{movie.title}</span>
+                  <button
+                    type="button"
+                    className="btn-icon"
+                    onClick={() => setPoolToDelete(movie)}
+                    aria-label={`Remove ${movie.title}`}
+                  >
+                    <IconTrash />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )
         )}
       </section>
 
       <section className="settings-card">
-        <div className="settings-card-header">
-          <h3 className="settings-card-title">Watched</h3>
-        </div>
+        <button
+          type="button"
+          className="settings-collapse-header"
+          onClick={() => setWatchedExpanded((open) => !open)}
+          aria-expanded={watchedExpanded}
+        >
+          <div>
+            <h3 className="settings-card-title">Watched</h3>
+            <span className="settings-collapse-meta">
+              {watched.length} movie{watched.length !== 1 ? 's' : ''}
+              {watchedExpanded ? ' · hide list' : ' · show list'}
+            </span>
+          </div>
+        </button>
 
         <form className="form-row" onSubmit={handleAddWatched}>
           <input
@@ -164,37 +191,52 @@ export default function SettingsPage() {
           </button>
         </form>
 
-        {watched.length === 0 ? (
-          <p className="empty-hint">No watched movies yet. Mark one from the wheel or add here.</p>
-        ) : (
-          <ul className="settings-list">
-            {watched.map((movie) => {
-              const avg = getAverageRating(movie.ratings);
-              const count = getRatingCount(movie.ratings);
-              return (
-                <li key={movie.id} className="settings-list-item">
-                  <div className="settings-list-meta">
-                    <span className="settings-list-label">{movie.title}</span>
-                    {avg != null && (
-                      <span className="settings-list-sub">
-                        Avg {avg} · {count} rating{count !== 1 ? 's' : ''}
-                      </span>
-                    )}
-                  </div>
-                  <button
-                    type="button"
-                    className="btn-icon"
-                    onClick={() => setWatchedToDelete(movie)}
-                    aria-label={`Remove ${movie.title}`}
-                  >
-                    <IconTrash />
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+        {watchedExpanded && (
+          watched.length === 0 ? (
+            <p className="empty-hint">No watched movies yet. Mark one from the wheel or add here.</p>
+          ) : (
+            <ul className="settings-list">
+              {watched.map((movie) => {
+                const avg = getAverageRating(movie.ratings);
+                const count = getRatingCount(movie.ratings);
+                return (
+                  <li key={movie.id} className="settings-list-item">
+                    <div className="settings-list-meta">
+                      <span className="settings-list-label">{movie.title}</span>
+                      {avg != null && (
+                        <span className="settings-list-sub">
+                          Avg {avg} · {count} rating{count !== 1 ? 's' : ''}
+                        </span>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      className="btn-icon"
+                      onClick={() => setWatchedToDelete(movie)}
+                      aria-label={`Remove ${movie.title}`}
+                    >
+                      <IconTrash />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )
         )}
       </section>
+
+      {personToDelete && (
+        <ConfirmModal
+          title="Remove from watch group?"
+          message={`Remove "${personToDelete}" from the watch group? Their ratings will be deleted.`}
+          confirmLabel="Remove"
+          onConfirm={() => {
+            removePerson(personToDelete);
+            setPersonToDelete(null);
+          }}
+          onCancel={() => setPersonToDelete(null)}
+        />
+      )}
 
       {poolToDelete && (
         <ConfirmModal
