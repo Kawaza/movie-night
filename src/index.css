@@ -715,7 +715,10 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .settings-collapse-header {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   width: 100%;
   margin: 0 0 14px;
   padding: 0;
@@ -728,7 +731,8 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-tap-highlight-color: transparent;
 }
 
-.settings-collapse-header:hover .settings-card-title {
+.settings-collapse-header:hover .settings-card-title,
+.settings-collapse-header:hover .settings-collapse-icon {
   color: var(--accent);
 }
 
@@ -737,6 +741,19 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 0.8125rem;
   color: var(--text-muted);
   margin-top: 2px;
+}
+
+.settings-collapse-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform 0.15s, color 0.15s;
+}
+
+.settings-collapse-icon-open {
+  transform: rotate(180deg);
 }
 
 .settings-card-title {

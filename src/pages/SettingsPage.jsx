@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMovies } from '../context/MovieContext';
-import { IconTrash } from '../components/Icons';
+import { IconTrash, IconChevronDown } from '../components/Icons';
 import ConfirmModal from '../components/ConfirmModal';
 import { getAverageRating, getRatingCount } from '../utils/storage';
 
@@ -121,9 +121,11 @@ export default function SettingsPage() {
             <h3 className="settings-card-title">Wheel</h3>
             <span className="settings-collapse-meta">
               {movies.length} movie{movies.length !== 1 ? 's' : ''}
-              {wheelExpanded ? ' · hide list' : ' · show list'}
             </span>
           </div>
+          <span className={`settings-collapse-icon${wheelExpanded ? ' settings-collapse-icon-open' : ''}`} aria-hidden="true">
+            <IconChevronDown />
+          </span>
         </button>
 
         <form className="form-row" onSubmit={handleAddMovie}>
@@ -173,9 +175,11 @@ export default function SettingsPage() {
             <h3 className="settings-card-title">Watched</h3>
             <span className="settings-collapse-meta">
               {watched.length} movie{watched.length !== 1 ? 's' : ''}
-              {watchedExpanded ? ' · hide list' : ' · show list'}
             </span>
           </div>
+          <span className={`settings-collapse-icon${watchedExpanded ? ' settings-collapse-icon-open' : ''}`} aria-hidden="true">
+            <IconChevronDown />
+          </span>
         </button>
 
         <form className="form-row" onSubmit={handleAddWatched}>
