@@ -48,10 +48,6 @@ export default function SettingsPage() {
 
   function handleAddPerson(e) {
     e.preventDefault();
-    if (people.length >= 10) {
-      setPersonError('Maximum 10 people');
-      return;
-    }
     const result = addPerson(newPerson);
     if (result.ok) {
       setNewPerson('');
@@ -82,7 +78,7 @@ export default function SettingsPage() {
             maxLength={24}
             aria-label="Person name"
           />
-          <button type="submit" className="btn btn-secondary" disabled={people.length >= 10}>
+          <button type="submit" className="btn btn-secondary">
             Add
           </button>
         </form>

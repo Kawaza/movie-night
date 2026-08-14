@@ -206,9 +206,6 @@ export function MovieProvider({ children }) {
       if (trimmed.length > 24) return { ok: false, error: 'Name too long' };
 
       const current = dataRef.current;
-      if (current.people.length >= 10) {
-        return { ok: false, error: 'Maximum 10 people' };
-      }
       if (current.people.some((p) => p.toLowerCase() === trimmed.toLowerCase())) {
         return { ok: false, error: 'Name already exists' };
       }
